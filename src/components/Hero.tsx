@@ -58,9 +58,9 @@ export default function Hero() {
     setProgress(0)
   }, [])
 
-  const toggleAutoplay = () => {
+  const toggleAutoplay = useCallback(() => {
     setIsPlaying(!isPlaying)
-  }
+  }, [isPlaying])
 
   // Progress bar and auto-slide with precise timing
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function Hero() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [nextSlide, prevSlide])
+  }, [nextSlide, prevSlide, toggleAutoplay])
 
   return (
     <section className="relative h-screen overflow-hidden">

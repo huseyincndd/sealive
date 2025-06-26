@@ -14,31 +14,32 @@ interface Container3DProps {
 function ContainerModel({ color, animate, ...props }: Container3DProps) {
   const groupRef = useRef<Group>(null)
   
-  try {
-    const { scene } = useGLTF('/container.gltf')
-    
-    useFrame((state) => {
-      if (groupRef.current && animate) {
-        // Gentle floating animation
-        groupRef.current.position.y = (props.position?.[1] || 0) + Math.sin(state.clock.elapsedTime * 0.5) * 0.1
-        
-        // Slow rotation
-        groupRef.current.rotation.y = (props.rotation?.[1] || 0) + state.clock.elapsedTime * 0.2
-      }
-    })
+  // Always call hooks at the top level
+  const gltf = useGLTF('/container.gltf')
+  
+  useFrame((state) => {
+    if (groupRef.current && animate) {
+      // Gentle floating animation
+      groupRef.current.position.y = (props.position?.[1] || 0) + Math.sin(state.clock.elapsedTime * 0.5) * 0.1
+      
+      // Slow rotation
+      groupRef.current.rotation.y = (props.rotation?.[1] || 0) + state.clock.elapsedTime * 0.2
+    }
+  })
 
-    return (
-      <group ref={groupRef} {...props}>
-        <primitive 
-          object={scene.clone()} 
-          scale={props.scale}
-        />
-      </group>
-    )
-  } catch (error) {
-    console.warn('GLTF loading failed, using fallback geometry:', error)
+  // Check if GLTF loaded successfully
+  if (!gltf?.scene) {
     return <FallbackContainer {...props} color={color} animate={animate} />
   }
+
+  return (
+    <group ref={groupRef} {...props}>
+      <primitive 
+        object={gltf.scene.clone()} 
+        scale={props.scale}
+      />
+    </group>
+  )
 }
 
 function FallbackContainer({ 

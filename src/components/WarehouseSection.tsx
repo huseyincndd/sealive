@@ -1,27 +1,13 @@
 'use client'
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Shield, Package, Truck, Globe, Zap, Star, CheckCircle } from 'lucide-react'
+import Image from 'next/image'
 
 export default function WarehouseSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1,
-      })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [])
 
   const solutions = [
     {
@@ -137,7 +123,7 @@ export default function WarehouseSection() {
               transition={{ duration: 1, delay: 0.4 }}
             >
               <span className="block bg-gradient-to-r from-gray-900 via-yellow-600 to-gray-900 bg-clip-text text-transparent">
-                We'll keep your
+                We&apos;ll keep your
               </span>
               <span className="block bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
                 items damage free
@@ -247,10 +233,12 @@ export default function WarehouseSection() {
             <div className="w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-yellow-50 relative">
               {/* Background GIF */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <img 
+                <Image 
                   src="https://milkywayglobal.com/wp-content/uploads/2024/08/source.gif"
                   alt="Logistics Animation"
                   className="w-full h-full object-cover rounded-3xl"
+                  width={1280}
+                  height={720}
                 />
                 
                 {/* Subtle Overlay */}

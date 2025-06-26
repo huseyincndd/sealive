@@ -2,20 +2,13 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { useRef } from 'react'
 import { TrendingUp, BarChart3, Users, Star, Quote } from 'lucide-react'
 import Image from 'next/image'
 
 export default function AnalyticsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [scrollY, setScrollY] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const features = [
     {
@@ -166,7 +159,7 @@ export default function AnalyticsSection() {
                 <Quote className="h-8 w-8 text-yellow-500 flex-shrink-0 mt-2" />
                 <div>
                   <p className="text-gray-700 italic text-lg leading-relaxed mb-4">
-                    "SEALİVE has revolutionized our logistics operations with their cutting-edge technology and exceptional service quality."
+                    &ldquo;SEALİVE has revolutionized our logistics operations with their cutting-edge technology and exceptional service quality.&rdquo;
                   </p>
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
